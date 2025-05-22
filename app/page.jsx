@@ -66,11 +66,11 @@ export default function Home() {
           </div>
         </section>
 
-          <footer className="w-full bg-gray-100 text-gray-700 py-8 border-t">
+          <footer className="w-full bg-gray-100 text-gray-700 py-8 border-t mt-4">
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-col md:flex-row justify-between items-center">
                     <div className="text-center md:text-left mb-4 md:mb-0">
-                        <h2 className="text-xl font-bold text-[#f56551]">Travel Buddy</h2>
+                        <h2 className="text-xl font-bold text-[#f56551]">AI Deco</h2>
                         <p className="text-sm text-gray-500">© 2025 All rights reserved.</p>
                     </div>
 
