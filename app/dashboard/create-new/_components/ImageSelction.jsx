@@ -22,8 +22,8 @@ const ImageSelction = ({selectedImage}) => {
                     <div className={`cursor-pointer border hover:shadow-lg rounded-xl border-dotted  p-20 flex  botder-primary justify-center bg-slate-300
                       ${file &&'p-0 bg-white'}
                     `}>
-                        {!file ? <Image src={'/up.png'} width={100} height={100} />
-                            : <Image src={URL.createObjectURL(file)} width={300} height={300}
+                        {!file ? <Image src={'/up.png'} width={100} height={100} alt='Selectd Image' />
+                            : <Image src={URL.createObjectURL(file)} width={300} height={300} alt='Selected Image'
                                 className='w-[300px] h-[300px] object-cover'
                             />}
                     </div>

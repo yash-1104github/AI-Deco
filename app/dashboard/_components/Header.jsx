@@ -6,8 +6,8 @@ import { UserButton } from "@clerk/clerk-react";
 import { UserDetailsConstext } from '@/app/_context/UserDetailContext';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { LayoutDashboardIcon,  Sparkles } from 'lucide-react';
-
+import { LayoutDashboardIcon } from 'lucide-react';
+import { ArrowRight, Sparkles, Palette, Lightbulb, Zap } from "lucide-react";
 
 
 const Header = () => {
@@ -16,6 +16,7 @@ const Header = () => {
 
   return (
 
+<<<<<<< HEAD
     <div className='py-6 px-4 shadow-sm flex justify-between items-center md:px-16'>
       <div className='flex items-center gap-2 md:px-8'>
          <div className="w-9 h-9 bg-gradient-to-r from-primary to-purple-600 rounded-lg flex items-center justify-center">
@@ -23,6 +24,16 @@ const Header = () => {
             </div>
         <Link href={'/'}>
           <div className='font-bold text-2xl tracking-wider text-slate-800'>AI Deco</div>
+=======
+    <div className='py-6  px-6 md:px-16 shadow-sm flex justify-between items-center'>
+
+      <div className='flex items-center gap-2 px-1 md:px-16'>
+        <div className="w-8 h-8 bg-gradient-to-r from-primary to-purple-600 rounded-lg flex items-center justify-center">
+              <Sparkles className="w-5 h-5 text-white" />
+            </div>
+        <Link href={'/'}>
+          <h2 className='text-2xl font-bold tracking-wide'>AI Deco</h2>
+>>>>>>> 26b8413 (update landing page)
         </Link>
       </div>
 
