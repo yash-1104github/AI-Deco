@@ -6,7 +6,7 @@ import { UserButton } from "@clerk/clerk-react";
 import { UserDetailsConstext } from '@/app/_context/UserDetailContext';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { LayoutDashboardIcon } from 'lucide-react';
+import { LayoutDashboardIcon,  Sparkles } from 'lucide-react';
 
 
 
@@ -16,11 +16,13 @@ const Header = () => {
 
   return (
 
-    <div className='py-6 px-4 shadow-sm flex justify-between items-center'>
-      <div className='flex items-center gap-2 '>
-        <Image src={'/logo.svg'} width={40} height={40} />
+    <div className='py-6 px-4 shadow-sm flex justify-between items-center md:px-16'>
+      <div className='flex items-center gap-2 md:px-8'>
+         <div className="w-9 h-9 bg-gradient-to-r from-primary to-purple-600 rounded-lg flex items-center justify-center">
+              <Sparkles className="w-5 h-5 text-white" />
+            </div>
         <Link href={'/'}>
-          <h2 className='font-bold text-lg'>AI Deco</h2>
+          <div className='font-bold text-2xl tracking-wider text-slate-800'>AI Deco</div>
         </Link>
       </div>
 
