@@ -13,9 +13,7 @@ import {
 const RoomType = ({ selectedRoomType }) => {
   return (
     <div>
-    <div className='mb-2'>
-      <label className='text-slate-700 text-lg'>Select Room Type</label>
-    </div>
+    <label className='text-slate-700 text-base'>Select Room Type</label>
           <Select onValueChange={(value ) => selectedRoomType(value)}>
               <SelectTrigger className="w-full">
                   <SelectValue placeholder="Room Type" />

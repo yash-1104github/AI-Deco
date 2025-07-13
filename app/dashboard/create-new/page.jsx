@@ -32,7 +32,7 @@ const CreateNew = () => {
       [fieldName]: value
     }))
 
-    //console.log(formData);
+    console.log(formData);
   }
 
   const GenerateAiImage = async () => {
@@ -47,7 +47,7 @@ const CreateNew = () => {
       userEmail: user?.primaryEmailAddress?.emailAddress
 
     })
-    //console.log(result.data);
+    console.log(result.data);
     setAiOutput(result.data.result);
     setOpenOutputDialog(true);
     setLoading(false);
@@ -56,7 +56,6 @@ const CreateNew = () => {
   }
 
   const SaveRawImageToFirebase = async () => {
-    
     const fileName = Date.now() + ".jpg";
     const imageRef = ref(storage, 'ai-room-redesign/' + fileName);
 
@@ -65,7 +64,7 @@ const CreateNew = () => {
       //console.log("File uploaded successfully");
 
       const downloadUrl = await getDownloadURL(imageRef);
-      //console.log("Download URL:", downloadUrl);
+      console.log("Download URL:", downloadUrl);
       setOrgImage(downloadUrl);
       return downloadUrl;
 
@@ -77,7 +76,7 @@ const CreateNew = () => {
 
   return (
     <div>
-      <h2 className='font-bold text-3xl md:text-4xl mt-8 text-primary text-center'>Experience the Magic of AI Remodeling</h2>
+      <h2 className='font-bold text-4xl mt-1 text-primary text-center'>Experience the Magic of AI Remodeling</h2>
       <p className='mt-2 text-center text-gray-500'>Tranform any room with a click. Select a space, choose a style, and watch as AI instantly reimageines your environment.</p>
 
       <div className='grid sm:grid-cols-1 md:grid-cols-2  py-12 gap-10'>

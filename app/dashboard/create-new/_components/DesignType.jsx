@@ -43,10 +43,8 @@ const DesignType = ({selectedDesignType}) => {
 
     return (
         <div className='mt-4'>
-            <div className='mb-2'>
             <label className='text-gray-700'>Select Interior Design Type</label>
-            </div>
-            <div className='grid mt-1 grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5'>
+            <div className='grid mt-1 grid-col-2 md:grid-cols-3 lg:grid-cols-3 gap-5'>
                 {
                     Designs.map((design, index) => (
                         <div key={index} onClick={() => {
@@ -54,7 +52,7 @@ const DesignType = ({selectedDesignType}) => {
                             selectedDesignType(design.name);
                             }}>
                             <Image src={design.image} alt={design.name} width={200} height={200} 
-                                className={`h-[100px] object-cover rounded-md hover:scale-105 transition-all cursor-pointer
+                                className={`h-[100px] w-[200px] object-cover rounded-md hover:scale-105 transition-all cursor-pointer
                                  ${design.name==selectedOption&&'border-2 border-primary rounded-md p-1'
                                  }
                                 `}/>

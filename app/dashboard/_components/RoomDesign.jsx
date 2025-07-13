@@ -6,6 +6,13 @@ import AiOutputDialog from './AiOutputDialog';
 
 const RoomDesign = ({ room }) => {
 
+    // const [openDialog, setOpenDialog] = useState(false);
+    // const onClickHandler = () => {
+
+    //     setOpenDialog(true);
+
+    // }
+
     return (
         <div className='shadow-md rounded-md cursor-pointer' onClick={() => onClickHandler()} >
             <ReactBeforeSliderComponent
@@ -24,6 +31,10 @@ const RoomDesign = ({ room }) => {
                     Design Type: {room.designType}
                 </h2>
             </div>
+            {/* <AiOutputDialog aiImage={room.aiImage} orgImage={room.originalImg}
+                closeDialog={() => setOpenDialog(false)}
+                openDialog={() => openDialog}
+            /> */}
         </div>
     )
 }
