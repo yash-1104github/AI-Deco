@@ -8,9 +8,10 @@ Users can view and manage all generated designs from their dashboard.
 
 **🛠 Tech Stack Used**
 - Frontend: Next.js, React, JavaScript, TailwindCSS
-- Backend: Next.js API Routes, Drizzle ORM, PostgreSQL
+- Backend:  Next.js , REST Architecture, Firebase
 - Authentication: Clerk
-- Database: Neon (PostgreSQL)
+- Database: Neon (PostgreSQL) 
+- ORM: Drizzle 
 - Image Storage: Firebase
 - Image Processing: Replicate API
 
