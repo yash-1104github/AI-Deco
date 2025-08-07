@@ -54,7 +54,7 @@ const DesignType = ({selectedDesignType}) => {
                             selectedDesignType(design.name);
                             }}>
                             <Image src={design.image} alt={design.name} width={200} height={200} 
-                                className={`h-[100px] bg-green-100 object-cover rounded-md hover:scale-105 transition-all cursor-pointer
+                                className={`h-[100px] object-cover rounded-md hover:scale-105 transition-all cursor-pointer
                                  ${design.name==selectedOption&&'border-2 border-primary rounded-md p-1'
                                  }
                                 `}/>
