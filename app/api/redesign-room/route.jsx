@@ -24,7 +24,7 @@ export async function POST(req) {
 
         const output = await replicate.run("adirik/interior-design:76604baddc85b1b4616e1c6475eca080da339c8875bd4996705440484a6eac38", { input });
 
-        console.log(output);
+        //console.log(output);
 
         // return NextResponse.json({ 'result': output });
         // const output = "https://replicate.delivery/xezq/uNHv0Kb47tprDF9j30eAS9XYBe4vFONFYkV63Kr4UDMhLkOUA/out.png"
@@ -36,8 +36,8 @@ export async function POST(req) {
         await uploadString(storageRef, base64Image, 'data_url');
         const downloadUrl = await getDownloadURL(storageRef);
 
-        console.log(imageUrl); 
-        console.log(downloadUrl);
+        //console.log(imageUrl); 
+        //console.log(downloadUrl);
 
         const dbResult = await db.insert(AiGeneratedImage).values({
             roomType: roomType,
@@ -47,7 +47,7 @@ export async function POST(req) {
             userEmail: userEmail
         }).returning({id:AiGeneratedImage.id });
 
-        console.log(dbResult);
+        //console.log(dbResult);
         return NextResponse.json({ 'result': downloadUrl});
 
     } catch (e) {

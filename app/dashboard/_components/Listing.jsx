@@ -25,13 +25,13 @@ const Listing = () => {
 
          setUserRoomList(result);
 
-         console.log(result);
+         //console.log(result);
     }
 
     return (
         <div>
             <div className='flex items-center mb-5 justify-between'>
-                <h2 className='text-3xl'>Hello, {user?.fullName}</h2>
+                <h2 className='text-2xl md:text-3xl my-4'>Hello, {user?.fullName}</h2>
                 <Link href={'/dashboard/create-new'}>
                     <Button>+ Redesign Room</Button>
                 </Link>

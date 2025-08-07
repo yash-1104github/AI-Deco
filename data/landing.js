@@ -13,7 +13,7 @@ export const testimonialsData = [
         image: "https://randomuser.me/api/portraits/men/75.jpg",
         alt: "Michael Chen",
         quote:
-            "The best interior design tool I've ever used! It’s so easy—upload, choose a style, and get professional-level redesign ideas. Highly recommended.",
+            "The best interior design tool I've ever used! It’s so easy upload, choose a style, and get professional level redesign ideas. Highly recommended.",
     },
     {
         name: "Emily Rodriguez",
