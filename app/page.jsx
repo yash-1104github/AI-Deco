@@ -112,7 +112,7 @@ export default function Home() {
                 >
                   <CardContent className="pt-2">
                     <div className="flex items-center mb-4">
-                      <Image
+                      <img
                         src={testimonial.image}
                         alt={testimonial.name}
                         width={40}
