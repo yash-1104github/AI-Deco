@@ -104,11 +104,11 @@ export default function Home() {
             <h2 className="text-center tracking-wide text-4xl md:text-5xl font-semibold mb-12 gradient-title">
               What Our Users Say
             </h2>
-            <div className="grid grid-cols-1  lg:grid-cols-3 gap-8 ">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-4 md:px-0">
               {testimonialsData.map((testimonial, index) => (
                 <Card
                   key={index}
-                  className="p-4 hover:shadow-elegant transition-all duration-300 hover:-translate-y-2 animate-fade-in"
+                  className="p-1 md:p-4 hover:shadow-elegant transition-all duration-300 hover:-translate-y-2 animate-fade-in"
                 >
                   <CardContent className="pt-2">
                     <div className="flex items-center mb-4">
@@ -126,7 +126,7 @@ export default function Home() {
                         </div>
                       </div>
                     </div>
-                    <div className="text-gray-500 justify-around text-lg ">
+                    <div className="text-gray-500 text-balance">
                       "{testimonial.quote}"
                     </div>
                   </CardContent>

@@ -8,7 +8,7 @@ const ImageSelction = ({selectedImage}) => {
 
 
     const onFileSelected = (event) => {
-        console.log(event.target.files[0]);
+        //console.log(event.target.files[0]);
         setFile(event.target.files[0]);
         selectedImage(event.target.files[0])
     }
