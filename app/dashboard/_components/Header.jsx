@@ -1,56 +1,51 @@
-"use client"
+"use client";
 
-import Image from 'next/image'
-import React, { useContext } from 'react'
+import Image from "next/image";
+import React, { useContext } from "react";
 import { UserButton } from "@clerk/clerk-react";
-import { UserDetailsConstext } from '@/app/_context/UserDetailContext';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { LayoutDashboardIcon } from 'lucide-react';
-
-
+import { UserDetailsConstext } from "@/app/_context/UserDetailContext";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { LayoutDashboardIcon } from "lucide-react";
 
 const Header = () => {
   const { userDetail, setUserDetail } = useContext(UserDetailsConstext);
 
-
   return (
-
-    <div className='py-6 px-4 shadow-sm flex justify-between items-center'>
-      <div className='flex items-center gap-2 '>
-        <Image src={'/logo.svg'} width={40} height={40} />
-        <Link href={'/'}>
-          <h2 className='font-bold text-lg'>AI Deco</h2>
+    <div className="py-6 px-4 md:px-12 shadow-sm flex justify-between items-center backdrop-blur-3xl">
+      <div className="flex items-center gap-2 ">
+        <Image src={"/logo.svg"} width={40} height={40} />
+        <Link href={"/"}>
+          <h2 className="font-semibold text-3xl text-gray-700 font-sans">
+            AI Deco
+          </h2>
         </Link>
       </div>
 
-      <div className='flex gap-7 items-center'>
-      {/* <Link href={'/dashboard/buy-credits'}>
-        <Button variant='ghost' className='rounded-full pl-4 text-primary '>Buy More Credits</Button>
-      </Link>
-        <div className='flex gap-2 items-center bg-gray-100 px-3 rounded-md'>
-          <Image src={'/star.png'} width={20} height={10} />
-          <h2 className='font-semibold'>{userDetail?.credits}</h2>
-        </div> */}
-
-        <Link href={'/dashboard'}>
-          <Button>
-            <LayoutDashboardIcon size={18} />
-            <span className='hidden md:inline'>Dashboard</span>
+      <div className="flex gap-7 items-center">
+        <Link href={"/dashboard/community"}>
+          <Button variant="ghost" className="rounded-full pl-4 text-xl text-primary ">
+             Community Design
           </Button>
         </Link>
 
-        <UserButton appearance={{
-          elements: {
-            avatarBox: "w-8 h-8",
-          },
-        }}
+        <Link href={"/dashboard"}>
+          <Button>
+            <LayoutDashboardIcon size={18} />
+            <span className="hidden md:inline">Dashboard</span>
+          </Button>
+        </Link>
+
+        <UserButton
+          appearance={{
+            elements: {
+              avatarBox: "w-8 h-8",
+            },
+          }}
         />
       </div>
-
     </div>
+  );
+};
 
-  )
-}
-
-export default Header
+export default Header;

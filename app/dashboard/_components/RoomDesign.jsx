@@ -2,16 +2,8 @@
 import React, { useState } from 'react'
 import ReactBeforeSliderComponent from 'react-before-after-slider-component';
 import 'react-before-after-slider-component/dist/build.css';
-import AiOutputDialog from './AiOutputDialog';
 
 const RoomDesign = ({ room }) => {
-
-    // const [openDialog, setOpenDialog] = useState(false);
-    // const onClickHandler = () => {
-
-    //     setOpenDialog(true);
-
-    // }
 
     return (
         <div className='shadow-md rounded-md cursor-pointer' onClick={() => onClickHandler()} >
@@ -23,18 +15,16 @@ const RoomDesign = ({ room }) => {
                     imageUrl: room?.originalImg
                 }}
             />
-            <div className='p-4 text-gray-600'>
-                <h2>
-                    Room Type:  {room.roomType}
-                </h2>
-                <h2>
-                    Design Type: {room.designType}
-                </h2>
+
+            <div className='p-4'>
+                <div className='text-xl text-blue-400'>
+                    Room Type :  <span className='ml-2 text-green-400'>{room.roomType}</span>
+                </div>
+                <div className='text-xl text-purple-400'>
+                    Design Type : <span className='ml-2 text-red-400'>{room.designType}</span> 
+                </div>
             </div>
-            {/* <AiOutputDialog aiImage={room.aiImage} orgImage={room.originalImg}
-                closeDialog={() => setOpenDialog(false)}
-                openDialog={() => openDialog}
-            /> */}
+            
         </div>
     )
 }

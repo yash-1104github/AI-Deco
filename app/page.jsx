@@ -1,12 +1,11 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Header from "./dashboard/_components/Header";
-import { testimonialsData } from "@/data/landing";
-import { Card, CardContent } from "@/components/ui/card";
-import Image from "next/image";
-import { Star } from "lucide-react";
-import { ArrowRight, Sparkles, Palette, Lightbulb, Zap } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import React from "react";
+import Image from "next/image";
+import Footer from "./dashboard/_components/Footer";
+import { Features, Testimonial } from "./dashboard/_components/testimonial";
 
 export default function Home() {
   return (
@@ -35,7 +34,7 @@ export default function Home() {
 
           <div className="mt-10 font-semibold">
             <Link href={"/dashboard"}>
-              <Button className="w-[150px] h-[50px]  md:w-[200px] md:h-[60px] text-lg animate-bounce">
+              <Button className=" h-[50px]  w-[200px] md:h-[60px] text-lg animate-bounce">
                 <div className="md:text-xl"> Get Started </div>
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
@@ -53,90 +52,15 @@ export default function Home() {
           </div>
         </div>
 
-        <section className="py-16 px-4 bg-gradient-secondary hidden md:flex">
-          <div className="container mx-auto">
-            <div className="text-center mb-8">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                Why Choose <span className="gradient-title">AI Deco</span>?
-              </h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Experience the future of interior design with our cutting-edge
-                AI technology
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="text-center p-8 rounded-2xl bg-white/50 backdrop-blur-sm hover:bg-white/70 transition-all duration-300 animate-fade-in">
-                <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <Zap className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold mb-4">Lightning Fast</h3>
-                <p className="text-muted-foreground">
-                  Get professional design suggestions in seconds, not days
-                </p>
-              </div>
-
-              <div className="text-center p-8 rounded-2xl bg-white/50 backdrop-blur-sm hover:bg-white/70 transition-all duration-300 animate-fade-in">
-                <div className="w-16 h-16 bg-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <Palette className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold mb-4">AI-Powered</h3>
-                <p className="text-muted-foreground">
-                  Advanced algorithms understand your style and preferences
-                </p>
-              </div>
-
-              <div className="text-center p-8 rounded-2xl bg-white/50 backdrop-blur-sm hover:bg-white/70 transition-all duration-300 animate-fade-in">
-                <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <Lightbulb className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold mb-4">Smart Suggestions</h3>
-                <p className="text-muted-foreground">
-                  Intelligent recommendations tailored to your space and budget
-                </p>
-              </div>
-            </div>
-          </div>
+        <section className="md:py-16 px-4 bg-gradient-secondary hidden md:flex">
+          <Features/>
         </section>
 
-        <section className="py-5">
-          <div className="container mx-auto px-4">
-            <h2 className="text-center tracking-wide text-4xl md:text-5xl font-semibold mb-12 gradient-title">
-              What Our Users Say
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-4 md:px-0">
-              {testimonialsData.map((testimonial, index) => (
-                <Card
-                  key={index}
-                  className="p-1 md:p-4 hover:shadow-elegant transition-all duration-300 hover:-translate-y-2 animate-fade-in"
-                >
-                  <CardContent className="pt-2">
-                    <div className="flex items-center mb-4">
-                      <img
-                        src={testimonial.image}
-                        alt={testimonial.name}
-                        width={40}
-                        height={40}
-                        className="rounded-full"
-                      />
-                      <div className="ml-4">
-                        <div className="font-semibold">{testimonial.name}</div>
-                        <div className="text-sm text-gray-900">
-                          {testimonial.role}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-gray-500 text-balance">
-                      "{testimonial.quote}"
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
+        <section className="md:py-5">
+          <Testimonial />
         </section>
 
-        <section className="py-16 px-4 bg-gradient-to-r from-primary via-purple-600 to-primary my-10">
+        <section className="py-16 px-4 bg-gradient-to-r from-primary via-purple-600 to-primary my-16 ">
           <div className="container mx-auto text-center">
             <div className="max-w-3xl mx-auto text-white">
               <h2 className="text-4xl md:text-5xl font-bold mb-6">
@@ -159,31 +83,9 @@ export default function Home() {
           </div>
         </section>
 
-        <footer className="bg-muted/30 py-12 px-4 border-t mt-12">
-          <div className="container mx-auto">
-            <div className="flex flex-col md:flex-row justify-between items-center">
-              <div className="text-center md:text-left mb-6 md:mb-0">
-                <div className="flex items-center gap-2 justify-center md:justify-start mb-2">
-                  <div className="w-8 h-8 bg-gradient-to-r from-primary to-purple-600 rounded-lg flex items-center justify-center">
-                    <Sparkles className="w-5 h-5 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold gradient-title">AI Deco</h3>
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  © 2025 All rights reserved.
-                </p>
-              </div>
-
-              <div className="text-center">
-                <div className="font-medium text-xl text-muted-foreground">
-                  Developed by{" "}
-                  <span className="text-primary font-bold text-3xl">Yash Gupta </span> 
-                </div>
-              </div>
-            </div>
-          </div>
-        </footer>
-
+        <div>
+          <Footer />
+        </div>
       </div>
     </>
   );

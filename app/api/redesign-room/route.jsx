@@ -1,7 +1,6 @@
 import { db } from "@/config/db";
 import { storage } from "@/config/firebase";
 import { AiGeneratedImage } from "@/config/schema";
-
 import axios from "axios";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { NextResponse } from "next/server";
@@ -12,10 +11,15 @@ const replicate = new Replicate({
     auth: process.env.NEXT_PUBLIC_REPLICATE_API_TOKEN
 });
 
+ console.log( "replicate", replicate);
+
 export async function POST(req) {
 
     const { imageUrl, roomType, designType, addInput, userEmail } = await req.json();
     
+    console.log( "replicate", replicate);
+    console.log("process.env.NEXT_PUBLIC_REPLICATE_API_TOKEN", process.env.NEXT_PUBLIC_REPLICATE_API_TOKEN);
+
     try {
         const input = {
             image: imageUrl,

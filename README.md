@@ -1,4 +1,4 @@
-# 🏠 Room Redesign Website
+# 🏠 Room Redesign Website 
 </hr>
 
 **Application Overview:**
@@ -8,11 +8,10 @@ Users can view and manage all generated designs from their dashboard.
 
 **🛠 Tech Stack Used**
 - Frontend: Next.js, React, JavaScript, TailwindCSS
-- Backend: Next.js API Routes, Drizzle ORM, PostgreSQL
+- Backend:  Node.js, RestFul API
 - Authentication: Clerk
-- Database: Neon (PostgreSQL)
-- Image Storage: Firebase
-- Image Processing: Replicate API
+- Database: PostgreSQL(Neon DB), Firebase , Drizzle ORM
+- Image Processing: Replicate API 
 
 **🚀 Key Features**
 - User Authentication: Secure sign-in/sign-up with Clerk.

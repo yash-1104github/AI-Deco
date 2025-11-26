@@ -20,11 +20,11 @@ const CustomLoading = ({ loading }) => {
             <AlertDialog open={loading}>
 
                 <AlertDialogContent>
-                    <div className='bg-white flex flex-col items-center mt-10 justify-center'>
-                      <Image src={'/rooling.gif'}   alt='loading'
+                    <div className='bg-white flex flex-col items-center mt-8 justify-center'>
+                      <Image src={'/rooling.gif'} alt='loading'
                         width={100}
                         height={100}/>
-                        <h2>Redesiging your Room... </h2>
+                        <div className='text-2xl'>Redesiging your Room... </div>
                     </div>
 
                 </AlertDialogContent>
