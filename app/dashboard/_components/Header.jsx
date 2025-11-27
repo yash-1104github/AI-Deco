@@ -3,8 +3,8 @@
 import Image from "next/image";
 import React, { useContext } from "react";
 import { UserButton } from "@clerk/clerk-react";
-import { UserDetailsConstext } from "@/app/_context/UserDetailContext";
-import { Button } from "@/components/ui/button";
+import { UserDetailsConstext } from "../../_context/UserDetailContext";
+import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import { LayoutDashboardIcon } from "lucide-react";
 
