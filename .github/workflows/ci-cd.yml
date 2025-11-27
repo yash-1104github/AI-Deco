@@ -49,6 +49,8 @@ jobs:
             --platform linux/amd64,linux/arm64 \
             -t yash4256/ai_deco:v1 \
             --push \
+            --build-arg NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}" \
+            --build-arg CLERK_SECRET_KEY="${{ secrets.CLERK_SECRET_KEY }}" \
             . 
 
       - name: Deployment confirmation
