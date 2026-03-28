@@ -1,7 +1,7 @@
 import { db } from "@/config/db";
 import { AiGeneratedImage } from "@/config/schema";
-import { supabase } from "@/lib/supabaseClient";
 import axios from "axios";
+import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 import Replicate from "replicate";
 
@@ -10,6 +10,13 @@ const replicate = new Replicate({
 });
 
 export async function POST(req) {
+
+  const supabase = createClient(
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+  );
+
+
   const { imageUrl, roomType, designType, addInput, userEmail } =
     await req.json();
 
