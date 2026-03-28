@@ -7,48 +7,34 @@ import DesignType from "./_components/DesignType";
 import Additional from "./_components/Additional";
 import { Button } from "@/components/ui/button";
 import axios, { toFormData } from "axios";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "@/config/firebase";
 import { useUser } from "@clerk/nextjs";
 import CustomLoading from "../_components/CustomLoading";
 import AiOutputDialog from "../_components/AiOutputDialog";
 import { toast } from "sonner";
+import { supabase } from "@/lib/supabaseClient";
 
 const CreateNew = () => {
+
   const { user } = useUser();
   const [formData, setFormData] = useState([]);
   const [loading, setLoading] = useState(false);
-  //const [outputResult, setOutputResult] = useState();
   const [aiOutput, setAiOutput] = useState();
   const [openOutputDialog, setOpenOutputDialog] = useState(false);
   const [orgImage, setOrgImage] = useState();
 
   const onHandleInputChange = (value, fieldName) => {
-    console.log("value", value);
-    console.log("fieldName", fieldName);
     setFormData((prev) => ({ ...prev, [fieldName]: value }));
   };
 
-  console.log(formData);
-
   const GenerateAiImage = async () => {
     try {
-      const rawImageUrl = await SaveRawImageToFirebase();
-      console.log("rawImage", rawImageUrl);
 
       if (formData.length == 0) {
         console.log("Please chose you style and room type");
         toast("Please chose you style and room type");
         return;
       }
-
-      if (!rawImageUrl) {
-        toast("Please Upload the image");
-        console.log("Upload the image");
-        return;
-      }
-
-      console.log("formData", formData);
 
       if (!formData.roomType) {
         toast("Please Select Room type");
@@ -60,8 +46,17 @@ const CreateNew = () => {
         toast("Please Select Design type");
         return;
       }
-
+      
       setLoading(true);
+
+      const rawImageUrl = await SaveRawImageToSupabase();
+      console.log("rawImageUrl",rawImageUrl);
+
+      if (!rawImageUrl) {
+        toast("Please Upload the image");
+        console.log("Upload the image");
+        return;
+      }
 
       const result = await axios.post("/api/redesign-room", {
         imageUrl: rawImageUrl,
@@ -71,32 +66,44 @@ const CreateNew = () => {
         userEmail: user?.primaryEmailAddress?.emailAddress,
       });
 
-      console.log(result.data);
       setAiOutput(result.data.result);
       setOpenOutputDialog(true);
-      setLoading(false);
+
     } catch (err) {
       console.log("err", err);
       toast("Some error occur try again");
+      
+    } finally {
+       setLoading(false);
     }
   };
 
-  const SaveRawImageToFirebase = async () => {
-    const fileName = Date.now() + ".jpg";
-    const imageRef = ref(storage, "ai-room-redesign/" + fileName);
+  const SaveRawImageToSupabase = async () => {
 
     try {
       if (!formData.image) {
-        console.log("select image");
         toast("Please select image");
         return;
       }
 
-      await uploadBytes(imageRef, formData.image);
-      console.log("File uploaded successfully");
+    const fileName = Date.now() + ".jpg";
+    const file = formData.image;
 
-      const downloadUrl = await getDownloadURL(imageRef);
+    const { data, error } = await supabase.storage.from("aideco").upload(fileName, file, {
+        contentType: file.type,
+    });
+
+    if (error) {
+      console.error("Upload error:", error);
+      toast("Upload failed");
+      return null;
+    }
+
+     const { data: urlData } = supabase.storage.from("aideco").getPublicUrl(fileName);
+
+      const downloadUrl = urlData.publicUrl;
       setOrgImage(downloadUrl);
+
       return downloadUrl;
     } catch (error) {
       console.error("Error uploading file:", error);

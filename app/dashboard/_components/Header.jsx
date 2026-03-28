@@ -14,7 +14,7 @@ const Header = () => {
   return (
     <div className="py-6 px-4 md:px-12 shadow-sm flex justify-between items-center backdrop-blur-3xl">
       <div className="flex items-center gap-2 ">
-        <Image src={"/logo.svg"} width={40} height={40} />
+        <Image src={"/logo.svg"} alt="logo" width={40} height={40} />
         <Link href={"/"}>
           <h2 className="font-semibold text-3xl text-gray-700 font-sans">
             AI Deco

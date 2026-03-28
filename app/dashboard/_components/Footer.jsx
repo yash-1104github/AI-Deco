@@ -9,7 +9,7 @@ export default function Footer() {
             <div className="hidden md:block text-center md:text-left mb-6 md:mb-0">
               <div className="flex items-center gap-2 justify-center md:justify-start mb-2">
                 <div className=" w-8 h-8 bg-gradient-to-r from-primary to-purple-600 rounded-lg flex items-center justify-center">
-                  <Image src={"/logo.svg"} width={40} height={40} />
+                  <Image src={"/logo.svg"} alt="logo" width={40} height={40} />
                 </div>
                 <h3 className="text-xl font-bold gradient-title">AI Deco</h3>
               </div>

@@ -5,6 +5,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { UserDetailsConstext } from "./_context/UserDetailContext";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { supabase } from "@/lib/supabaseClient";
 
 const Provider = ({ children }) => {
   const { user } = useUser();
@@ -19,8 +20,14 @@ const Provider = ({ children }) => {
       user: user,
     });
     setUserDetail(dataResult.data.result);
-    // console.log(dataResult.data);
   };
+
+  async function myfun() {
+     const { data, error } = await supabase.storage.from("aideco").list("", { limit: 20 });
+     console.log({ data, error });
+  }
+
+  myfun();
 
   return (
     <UserDetailsConstext.Provider value={{ userDetail, setUserDetail }}>
