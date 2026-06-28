@@ -6,16 +6,13 @@ import RoomType from "./_components/RoomType";
 import DesignType from "./_components/DesignType";
 import Additional from "./_components/Additional";
 import { Button } from "@/components/ui/button";
-import axios, { toFormData } from "axios";
-import { storage } from "@/config/firebase";
+import axios from "axios";
 import { useUser } from "@clerk/nextjs";
 import CustomLoading from "../_components/CustomLoading";
 import AiOutputDialog from "../_components/AiOutputDialog";
 import { toast } from "sonner";
-import { supabase } from "@/lib/supabaseClient";
 
 const CreateNew = () => {
-
   const { user } = useUser();
   const [formData, setFormData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -29,16 +26,13 @@ const CreateNew = () => {
 
   const GenerateAiImage = async () => {
     try {
-
       if (formData.length == 0) {
-        console.log("Please chose you style and room type");
         toast("Please chose you style and room type");
         return;
       }
 
       if (!formData.roomType) {
         toast("Please Select Room type");
-        console.log("Please Select Room type");
         return;
       }
 
@@ -46,19 +40,17 @@ const CreateNew = () => {
         toast("Please Select Design type");
         return;
       }
-      
+
       setLoading(true);
 
-      const rawImageUrl = await SaveRawImageToSupabase();
-      console.log("rawImageUrl",rawImageUrl);
+      const rawImageUrl = await uploadRawImage();
 
       if (!rawImageUrl) {
         toast("Please Upload the image");
-        console.log("Upload the image");
         return;
       }
 
-      const result = await axios.post("/api/redesign-room", {
+      const startRes = await axios.post("/api/redesign-room", {
         imageUrl: rawImageUrl,
         roomType: formData?.roomType,
         designType: formData?.designType,
@@ -66,47 +58,81 @@ const CreateNew = () => {
         userEmail: user?.primaryEmailAddress?.emailAddress,
       });
 
-      setAiOutput(result.data.result);
-      setOpenOutputDialog(true);
+      const predictionId = startRes.data.id;
 
+      if (!predictionId) {
+        throw new Error("Failed to start AI job");
+      }
+
+      let attempts = 0;
+      const maxAttempts = 30;
+
+      const poll = async () => {
+        try {
+          const statusRes = await axios.get("/api/redesign-room", {
+            params: {
+              id: predictionId,
+              roomType: formData?.roomType,
+              designType: formData?.designType,
+              imageUrl: rawImageUrl,
+              userEmail: user?.primaryEmailAddress?.emailAddress,
+            },
+          });
+
+          const data = statusRes.data;
+
+          console.log("Polling status:", data);
+
+          if (data.status === "completed") {
+            setAiOutput(data.image);
+            setOpenOutputDialog(true);
+            setLoading(false);
+            return;
+          }
+
+          if (data.status === "failed") {
+            throw new Error("AI generation failed");
+          }
+
+          if (attempts < maxAttempts) {
+            attempts++;
+            setTimeout(poll, 2000);
+          } else {
+            throw new Error("Timeout: AI took too long");
+          }
+        } catch (err) {
+          console.error("Polling error:", err);
+          toast("Error generating image");
+          setLoading(false);
+        }
+      };
+
+      poll();
     } catch (err) {
       console.log("err", err);
       toast("Some error occur try again");
-      
-    } finally {
-       setLoading(false);
+      setLoading(false);
     }
   };
 
-  const SaveRawImageToSupabase = async () => {
-
+  const uploadRawImage = async () => {
     try {
       if (!formData.image) {
         toast("Please select image");
         return;
       }
 
-    const fileName = Date.now() + ".jpg";
-    const file = formData.image;
+      const uploadData = new FormData();
+      uploadData.append("file", formData.image);
 
-    const { data, error } = await supabase.storage.from("aideco").upload(fileName, file, {
-        contentType: file.type,
-    });
-
-    if (error) {
-      console.error("Upload error:", error);
-      toast("Upload failed");
-      return null;
-    }
-
-     const { data: urlData } = supabase.storage.from("aideco").getPublicUrl(fileName);
-
-      const downloadUrl = urlData.publicUrl;
+      const { data } = await axios.post("/api/upload-image", uploadData);
+      const downloadUrl = data.url;
       setOrgImage(downloadUrl);
 
       return downloadUrl;
     } catch (error) {
       console.error("Error uploading file:", error);
+      toast("Upload failed");
       return null;
     }
   };
@@ -144,11 +170,11 @@ const CreateNew = () => {
               onHandleInputChange(value, "designType")
             }
           />
-          
+
           <div className="">
-          <Button onClick={GenerateAiImage} className="mt-6 w-full px-12 ">
-            Generate Your Design
-          </Button>
+            <Button onClick={GenerateAiImage} className="mt-6 w-full px-12 ">
+              Generate Your Design
+            </Button>
           </div>
         </div>
       </div>

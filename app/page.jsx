@@ -6,7 +6,6 @@ import React from "react";
 import Image from "next/image";
 import Footer from "./dashboard/_components/Footer";
 import { Features, Testimonial } from "./dashboard/_components/testimonial";
-import { supabase } from "@/lib/supabaseClient";
 
 export default function Home() {
 

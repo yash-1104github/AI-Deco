@@ -1,86 +1,110 @@
 import { db } from "@/config/db";
 import { AiGeneratedImage } from "@/config/schema";
+import { uploadImage } from "@/lib/cloudinary";
 import axios from "axios";
-import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 import Replicate from "replicate";
 
-const replicate = new Replicate({
-  auth: process.env.NEXT_PUBLIC_REPLICATE_API_TOKEN,
-});
-
 export async function POST(req) {
+  if (!process.env.REPLICATE_API_TOKEN) {
+    return NextResponse.json(
+      { error: "missing repliate token" },
+      { status: 500 },
+    );
+  }
 
-  const supabase = createClient(
-    process.env.SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_ROLE_KEY
-  );
+  const replicate = new Replicate({
+    auth: process.env.REPLICATE_API_TOKEN,
+  });
 
-
-  const { imageUrl, roomType, designType, addInput, userEmail } =
-    await req.json();
+  const { imageUrl, roomType, designType, addInput, userEmail } =  await req.json();
 
   try {
     const input = {
       image: imageUrl,
-      prompt:
-        "A " +
-        roomType +
-        " with a " +
-        designType +
-        " style interior " +
-        addInput,
-    };
+      prompt: "A " + roomType + " with a " + designType + " style interior " + addInput,
+     };
 
-    // 1️⃣ Generate AI image (returns URL)
-    const output = await replicate.run(
-      "adirik/interior-design:76604baddc85b1b4616e1c6475eca080da339c8875bd4996705440484a6eac38",
-      { input }
+    const prediction = await replicate.predictions.create({
+      version:
+        "adirik/interior-design:76604baddc85b1b4616e1c6475eca080da339c8875bd4996705440484a6eac38",
+      input,
+    });
+
+
+     return NextResponse.json({ id: prediction.id });
+  } catch (e) {
+    console.error("ERROR:", e);
+    return NextResponse.json({ error: e.message }, { status: 500 });
+  }
+}
+
+export async function GET(req) {
+  const { searchParams } = new URL(req.url);
+  const id = searchParams.get("id");
+  const roomType = searchParams.get("roomType");
+  const designType = searchParams.get("designType");
+  const imageUrl = searchParams.get("imageUrl");
+  const userEmail = searchParams.get("userEmail");
+
+  if (!id) {
+    return NextResponse.json({ error: "Missing id" }, { status: 400 });
+  }
+
+  if (
+    !process.env.CLOUDINARY_NAME ||
+    !process.env.CLOUDINARY_API_KEY ||
+    !process.env.CLOUDINARY_API_SECRET
+  ) {
+    return NextResponse.json(
+      { error: "Missing Cloudinary credentials" },
+      { status: 500 },
     );
+  }
 
-    // 2️⃣ Fetch image as BUFFER (NO base64)
-    const response = await axios.get(output, {
+  if (!process.env.REPLICATE_API_TOKEN) {
+    return NextResponse.json(
+      { error: "missing repliate token" },
+      { status: 500 },
+    );
+  }
+
+  const replicate = new Replicate({
+    auth: process.env.REPLICATE_API_TOKEN,
+  });
+
+  try {
+    const prediction = await replicate.predictions.get(id);
+
+    if (prediction.status !== "succeeded") {
+      return NextResponse.json({ status: prediction.status });
+    }
+
+    const outputUrl = prediction.output[0];
+
+    const response = await axios.get(outputUrl, {
       responseType: "arraybuffer",
     });
 
-    const fileName = `images/${Date.now()}.png`;
+    const downloadUrl = await uploadImage(Buffer.from(response.data), "aideco/ai");
 
-    // 3️⃣ Upload to Supabase
-    const { data, error } = await supabase.storage
-      .from("aideco")
-      .upload(fileName, response.data, {
-        contentType: "image/png",
-      });
-
-    if (error) {
-      console.error("Upload error:", error);
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
-
-    // 4️⃣ Get public URL
-    const { data: urlData } = supabase.storage
-      .from("aideco")
-      .getPublicUrl(fileName);
-
-    const downloadUrl = urlData.publicUrl;
-
-    // 5️⃣ Save in DB
-    const dbResult = await db
-      .insert(AiGeneratedImage)
-      .values({
+    if (roomType && designType && imageUrl) {
+      const dbResult = await db.insert(AiGeneratedImage).values({
         roomType,
         designType,
         originalImg: imageUrl,
         aiImage: downloadUrl,
         userEmail,
-      })
-      .returning({ id: AiGeneratedImage.id });
+      }).returning({ id: AiGeneratedImage.id });
 
-    console.log("DB Result:", dbResult);
+      console.log("DB Result:", dbResult);
+    }
 
-    return NextResponse.json({ result: downloadUrl });
+    return NextResponse.json({
+      status: "completed",
+      image: downloadUrl,
+    });
   } catch (e) {
-    console.error("ERROR:", e);
     return NextResponse.json({ error: e.message }, { status: 500 });
   }
 }

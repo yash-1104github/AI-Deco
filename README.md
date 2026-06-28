@@ -7,10 +7,10 @@ The Room Redesign Website is a web application that allows users to transform th
 Users can view and manage all generated designs from their dashboard.
 
 **🛠 Tech Stack Used**
-- Frontend: Next.js, React, JavaScript, TailwindCSS
-- Backend:  Node.js, RestFul API
+- Framwork & Library: Next.js, JavaScript, TailwindCSS
 - Authentication: Clerk
-- Database: PostgreSQL(Neon DB), Firebase , Drizzle ORM
+- Database: PostgreSQL (Neon DB), Drizzle ORM
+- Image Storage: Cloudinary
 - Image Processing: Replicate API 
 
 **🚀 Key Features**
@@ -59,7 +59,7 @@ Users can view and manage all generated designs from their dashboard.
 - Authentication: Clerk
 - Database: Neon (PostgreSQL) 
 - ORM: Drizzle 
-- Image Storage: Firebase
+- Image Storage: Cloudinary
 - Image Processing: Replicate API
 
 **🚀 Key Features**

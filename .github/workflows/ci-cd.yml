@@ -33,6 +33,10 @@ jobs:
          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
          CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
 
+         CLOUDINARY_NAME: ${{ secrets.CLOUDINARY_NAME }}
+         CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+         CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+
       - name: Set up Docker Buildx 
         uses: docker/setup-buildx-action@v3
 
@@ -51,6 +55,9 @@ jobs:
             --push \
             --build-arg NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}" \
             --build-arg CLERK_SECRET_KEY="${{ secrets.CLERK_SECRET_KEY }}" \
+            --build-arg CLOUDINARY_NAME="${{ secrets.CLOUDINARY_NAME }}" \
+            --build-arg CLOUDINARY_API_KEY="${{ secrets.CLOUDINARY_API_KEY }}" \
+            --build-arg CLOUDINARY_API_SECRET="${{ secrets.CLOUDINARY_API_SECRET }}" \
             . 
 
       - name: Deployment confirmation
