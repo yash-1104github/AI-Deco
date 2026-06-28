@@ -80,7 +80,15 @@ export async function GET(req) {
       return NextResponse.json({ status: prediction.status });
     }
 
-    const outputUrl = prediction.output[0];
+    const output = prediction.output;
+    const outputUrl = Array.isArray(output) ? output[0] : output;
+
+    if (!outputUrl || typeof outputUrl !== "string") {
+      return NextResponse.json(
+        { error: "Invalid prediction output" },
+        { status: 500 }
+      );
+    }
 
     const response = await axios.get(outputUrl, {
       responseType: "arraybuffer",
@@ -105,6 +113,7 @@ export async function GET(req) {
       image: downloadUrl,
     });
   } catch (e) {
+    console.error("Redesign room GET error:", e);
     return NextResponse.json({ error: e.message }, { status: 500 });
   }
 }

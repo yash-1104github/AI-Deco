@@ -1,7 +1,7 @@
 "use client";
 
 import { db } from "@/config/db";
-import { AiGeneratedImage } from "@/config/schema";
+import { AiGeneratedImage, CommunityImages } from "@/config/schema";
 import { useState, useEffect } from "react";
 import RoomDesign from "../_components/RoomDesign";
 
@@ -13,7 +13,7 @@ export default function CommunityPost() {
   }, []);
 
   async function fetchPost() {
-    const res = await db.select().from(AiGeneratedImage);
+    const res = await db.select().from(CommunityImages);
     console.log(res);
     setCommunityPost(res);
   }

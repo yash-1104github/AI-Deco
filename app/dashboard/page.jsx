@@ -49,7 +49,13 @@ const Dashboard = () => {
         <div className="mt-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 ">
             {userRoomList.map((room, index) => (
-              <RoomDesign key={index} room={room} />
+              <RoomDesign
+                key={index}
+                room={room}
+                showCommunityUpload
+                userEmail={user?.primaryEmailAddress?.emailAddress}
+                userName={user?.fullName}
+              />
             ))}
           </div>
         </div>

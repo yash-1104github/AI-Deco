@@ -186,6 +186,10 @@ const CreateNew = () => {
         closeDialog={() => setOpenOutputDialog(false)}
         orgImage={orgImage}
         aiImage={aiOutput}
+        roomType={formData?.roomType}
+        designType={formData?.designType}
+        userEmail={user?.primaryEmailAddress?.emailAddress}
+        userName={user?.fullName}
       />
     </div>
   );
